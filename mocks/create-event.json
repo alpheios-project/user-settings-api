@@ -2,7 +2,7 @@
   "pathParameters": {
     "id": "alpheios-feature-settings__2__locale"
   },
-  "body": "\"en-US\"",
+  "body": "\"fr\"",
   "requestContext": {
     "authorizer": {
       "principalId": "mock-oauth2|9999999999"

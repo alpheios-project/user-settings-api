@@ -1,8 +1,7 @@
 {
-  "pathParameters": {
-    "id": "alpheios-content-settings__2__mode"
+  "queryStringParameters": {
+    "domain": "alpheios-none-settings__2"
   },
-  "body": "\"verbose\"",
   "requestContext": {
     "authorizer": {
       "principalId": "mock-oauth2|9999999999"

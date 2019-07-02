@@ -85,7 +85,7 @@ functions:
           request:
             parameters:
               querystrings:
-                languageCode: false
+                domain: false
           cors: true
           authorizer:
             name: authorizerFunc
@@ -97,7 +97,7 @@ functions:
           request:
             parameters:
               querystrings:
-                languageCode: false
+                domain: false
           cors: true
           authorizer:
             name: authorizerFunc
