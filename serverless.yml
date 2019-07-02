@@ -1,0 +1,175 @@
+service: user-settings-api
+
+# Use the serverless-webpack plugin to transpile ES6
+plugins:
+  - serverless-webpack
+  - serverless-offline
+  - serverless-aws-documentation
+
+# serverless-webpack configuration
+# Enable auto-packing of external modules
+custom:
+  webpack:
+    webpackConfig: ./webpack.config.js
+    includeModules: true
+
+provider:
+  name: aws
+  runtime: nodejs10.x
+  stage: prod
+  region: us-east-2
+  environment:
+    AUTH0_CLIENT_PUBLIC_KEY: ${file(./public_key)}
+    AUTH0_AUDIENCE: alpheios.net:apis
+    AUTH0_TEST_ID: ${file(./test_id)}
+    DATABASE_NAME: user-settings
+
+  # 'iamRoleStatements' defines the permission policy for the Lambda function.
+  # In this case Lambda functions are granted with permissions to access DynamoDB.
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:DescribeTable
+        - dynamodb:Query
+        - dynamodb:Scan
+        - dynamodb:GetItem
+        - dynamodb:PutItem
+        - dynamodb:UpdateItem
+        - dynamodb:DeleteItem
+      Resource: "arn:aws:dynamodb:us-east-2:*:*"
+
+functions:
+  authorizerFunc:
+    handler: authorize.main
+    cors: true
+  # Defines an HTTP API endpoint that calls the main function in create.js
+  # - path: url path is /settings
+  # - method: POST request
+  # - cors: enabled CORS (Cross-Origin Resource Sharing) for browser cross
+  #     domain api call
+  # - authorizer: authenticate using the AWS IAM role
+  create:
+    handler: create.main
+    events:
+      - http:
+          path: settings/{id}
+          method: post
+          cors: true
+          authorizer:
+            name: authorizerFunc
+            resultTtlInSeconds: 0
+            type: token
+  # Defines an HTTP API endpoint that calls the main function in get.js
+  # - path: url path is /settings/{id}
+  # - method: GET request
+  get:
+    handler: get.main
+    events:
+      - http:
+          path: settings/{id}
+          method: get
+          cors: true
+          authorizer:
+            name: authorizerFunc
+            resultTtlInSeconds: 0
+            type: token
+  # Defines an HTTP API endpoint that calls the main function in list.js
+  # - path: url path is /settings
+  # - method: GET request
+  list:
+    handler: list.main
+    events:
+      - http:
+          path: settings
+          method: get
+          request:
+            parameters:
+              querystrings:
+                languageCode: false
+          cors: true
+          authorizer:
+            name: authorizerFunc
+            resultTtlInSeconds: 0
+            type: token
+      - http:
+          path: settings
+          method: post
+          request:
+            parameters:
+              querystrings:
+                languageCode: false
+          cors: true
+          authorizer:
+            name: authorizerFunc
+            resultTtlInSeconds: 0
+            type: token
+
+  # Defines an HTTP API endpoint that calls the main function in update.js
+  # - path: url path is /settings/{id}
+  # - method: PUT request
+  update:
+    handler: update.main
+    events:
+      - http:
+          path: settings/{id}
+          method: put
+          cors: true
+          authorizer:
+            name: authorizerFunc
+            resultTtlInSeconds: 0
+            type: token
+  # Defines an HTTP API endpoint that calls the main function in delete.js
+  # - path: url path is /settings/{id}
+  # - method: DELETE request
+  delete:
+    handler: delete.main
+    events:
+      - http:
+          path: settings/{id}
+          method: delete
+          cors: true
+          authorizer:
+            name: authorizerFunc
+            resultTtlInSeconds: 0
+            type: token
+  # Defines an HTTP API endpoint that calls the main function in delete-list.js
+  # - path: url path is /settings/{id}
+  # - method: DELETE request
+  deleteList:
+    handler: delete-list.main
+    events:
+      - http:
+          path: settings
+          method: delete
+          request:
+            parameters:
+              querystrings:
+                domain: true
+          cors: true
+          authorizer:
+            resultTtlInSeconds: 0
+            name: authorizerFunc
+            type: token
+resources:
+  Resources:
+    # This response is needed for custom authorizer failures cors support ¯\_(ツ)_/¯
+    GatewayResponse:
+      Type: 'AWS::ApiGateway::GatewayResponse'
+      Properties:
+        ResponseParameters:
+          gatewayresponse.header.Access-Control-Allow-Origin: "'*'"
+          gatewayresponse.header.Access-Control-Allow-Headers: "'*'"
+        ResponseType: EXPIRED_TOKEN
+        RestApiId:
+          Ref: 'ApiGatewayRestApi'
+        StatusCode: '401'
+    AuthFailureGatewayResponse:
+      Type: 'AWS::ApiGateway::GatewayResponse'
+      Properties:
+        ResponseParameters:
+          gatewayresponse.header.Access-Control-Allow-Origin: "'*'"
+          gatewayresponse.header.Access-Control-Allow-Headers: "'*'"
+        ResponseType: UNAUTHORIZED
+        RestApiId:
+          Ref: 'ApiGatewayRestApi'
+        StatusCode: '401'

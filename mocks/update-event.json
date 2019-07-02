@@ -1,0 +1,11 @@
+{
+  "body": "\"en-GB\"",
+  "pathParameters": {
+    "id": "alpheios-feature-settings__2__locale"
+  },
+  "requestContext": {
+    "authorizer": {
+      "principalId": "mock-oauth2|9999999999"
+    }
+  }
+}

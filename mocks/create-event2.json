@@ -1,0 +1,11 @@
+{
+  "pathParameters": {
+    "id": "alpheios-feature-settings__2__mode"
+  },
+  "body": "\"verbose\"",
+  "requestContext": {
+    "authorizer": {
+      "principalId": "mock-oauth2|9999999999"
+    }
+  }
+}
