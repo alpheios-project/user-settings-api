@@ -5,8 +5,7 @@ import { created, failure } from "./libs/response-lib";
 const TABLE_NAME = process.env.DATABASE_NAME
 
 export async function main(event, context) {
-  const data = JSON.parse(event.body);
-  console.log(data)
+  const data = event.body;
   const params = {
     TableName: TABLE_NAME,
     Item: {
