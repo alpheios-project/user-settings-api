@@ -5,25 +5,14 @@ const TABLE_NAME = process.env.DATABASE_NAME
 
 export async function main(event, context) {
   console.log("List",event)
-  let params
-  if (event.queryStringParameters && event.queryStringParameters.languageCode) {
-    params = {
-      TableName:TABLE_NAME,
-      KeyConditionExpression: "userId = :userId",
-      ExpressionAttributeValues: {
-        ":userId": event.requestContext.authorizer.principalId,
-      }
-    }
-
-  } else {
-    params = {
+  let params = {
       TableName:TABLE_NAME,
       KeyConditionExpression: "userId = :userId",
       ExpressionAttributeValues: {
         ":userId": event.requestContext.authorizer.principalId
       }
-    }
   }
+
 
   try {
     const result = await dynamoDbLib.call("query", params);
