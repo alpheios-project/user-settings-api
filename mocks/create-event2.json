@@ -1,6 +1,6 @@
 {
   "pathParameters": {
-    "id": "alpheios-content-settings__2__mode"
+    "id": "alpheios-content-options__2__mode"
   },
   "body": "\"verbose\"",
   "requestContext": {

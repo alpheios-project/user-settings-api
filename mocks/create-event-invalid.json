@@ -1,7 +1,8 @@
 {
   "pathParameters": {
-    "id": "alpheios-feature-options__2__locale"
+    "id": "foosetting"
   },
+  "body": "\"verbose\"",
   "requestContext": {
     "authorizer": {
       "principalId": "mock-oauth2|9999999999"
