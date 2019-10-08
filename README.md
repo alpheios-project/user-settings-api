@@ -69,7 +69,7 @@ Description: returns a specific setting for the authorized principal
 
 Required Request Header: `Authorization: Bearer <access token>`
 
-Required Path Parameter: `id` - a setting id in the format `<domain>_<version>_<name>[<_group>]`
+Required Path Parameter: `id` - a setting id in the format `<domain>_<version>_<name>[_<group>]`
 
 Response Content-Type: `application/json`
 
@@ -109,7 +109,7 @@ Description: saves a new setting value (or replaces if existing) for the authori
              
 Required Request Header: `Authorization: Bearer <access token>`
 
-Required Path Parameter: `id` - a setting id in the format `<domain>_<version>_<name>[<_group>]`
+Required Path Parameter: `id` - a setting id in the format `<domain>_<version>_<name>[_<group>]`
 
 Required Request Body: escaped string value for the setting
 
