@@ -11,7 +11,7 @@ export function validateKeyValue(key,value) {
     console.error(`Invalid key ${key}`)
     return false
   }
-  if (! process.env.VALID_DOMAINS.includes(domain)) {
+  if (! process.env.VALID_DOMAINS.split(',').includes(domain)) {
     console.error(`Invalid domain ${domain}`)
     return false
   }

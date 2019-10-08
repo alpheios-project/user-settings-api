@@ -341,7 +341,7 @@ In addition, the provider must be setup with the following environment variables
   * `AUTH0_AUDIENCE` the audience which must include a grant in the JWT access token (e.g. alpheios.net:apis)
   * `AUTH0_TEST_ID` path to a file containing a mock access token that can be used by clients for testing
   * `DATABASE_NAME` name of the DynamoDB Table 
-  * `VALID_DOMAINS` list of valid domains for setting keys
+  * `VALID_DOMAINS` comma-separated list of valid domains for setting keys
 
 The Alpheios development environment has `AUTH0_CLIENT_PUBLIC_KEY` read from a file in the root directory named 'public_key' and the `AUTH0_TEST_ID` read from a file in the root directory named `test_id`. These files are kept in a private repository and copied for deployment.
 

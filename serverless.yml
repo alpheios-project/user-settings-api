@@ -23,10 +23,7 @@ provider:
     AUTH0_AUDIENCE: alpheios.net:apis
     AUTH0_TEST_ID: ${file(./test_id)}
     DATABASE_NAME: user-settings
-    VALID_DOMAINS:
-      - alpheios-feature-options
-      - alpheios-ui-options
-      - alpheios-resource-options
+    VALID_DOMAINS: alpheios-feature-options,alpheios-ui-options,alpheios-resource-options
 
   # 'iamRoleStatements' defines the permission policy for the Lambda function.
   # In this case Lambda functions are granted with permissions to access DynamoDB.

@@ -9,7 +9,7 @@ describe('validateKeyValue.js', () => {
   const validValue = JSON.stringify("grc")
 
   beforeAll(() => {
-    process.env = Object.assign(process.env, { VALID_DOMAINS : ['alpheios-feature-options'] })
+    process.env = Object.assign(process.env, { VALID_DOMAINS : 'alpheios-feature-options,alpheios-ui-options,alpheios-resource-options' })
   })
 
   it('accepts valid key and value', () => {
