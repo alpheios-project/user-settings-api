@@ -319,6 +319,10 @@ Primary partition key: userId (String)
 
 Primary sort key: settingName (String)
 
+**Node**
+
+node v10.5.0
+
 **Serverless**
 
  `npm install serverless -g`
