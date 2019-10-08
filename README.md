@@ -38,6 +38,8 @@ Description: returns all settings that begin with the supplied domain string for
 
 Required Request Header: `Authorization: Bearer <access token>`
 
+Required Path Parameter: `domain` - setting domain key 
+
 Response Content-Type: `application/json`
 
 Success Response Code: `200`
