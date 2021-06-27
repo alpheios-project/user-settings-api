@@ -9,18 +9,23 @@ plugins:
 # serverless-webpack configuration
 # Enable auto-packing of external modules
 custom:
+  myStage: ${opt:stage, self:provider.stage}
   webpack:
     webpackConfig: ./webpack.config.js
     includeModules: true
+  myEnvironment:
+    audience:
+      prod: alpheios.net:apis
+      dev: alpheios.net:dev-apis
 
 provider:
   name: aws
-  runtime: nodejs10.x
+  runtime: nodejs14.x
   stage: prod
   region: us-east-2
   environment:
     AUTH0_CLIENT_PUBLIC_KEY: ${file(./public_key)}
-    AUTH0_AUDIENCE: alpheios.net:apis
+    AUTH0_AUDIENCE: ${self:custom.myEnvironment.audience.${self:custom.myStage}}
     AUTH0_TEST_ID: ${file(./test_id)}
     DATABASE_NAME: user-settings
     VALID_DOMAINS: alpheios-feature-options,alpheios-ui-options,alpheios-resource-options
@@ -88,7 +93,9 @@ functions:
               querystrings:
                 domain: false
           cors: true
-          authorizer: arn:aws:lambda:us-east-2:637002641732:function:user-word-api-prod-authorizerFunc
+          authorizer:
+            name: settingsAuthorizerFunc
+            resultTtlInSeconds: 0
       - http:
           path: settings
           method: post
@@ -97,7 +104,10 @@ functions:
               querystrings:
                 domain: false
           cors: true
-          authorizer: arn:aws:lambda:us-east-2:637002641732:function:user-word-api-prod-authorizerFunc
+          authorizer: 
+            name: settingsAuthorizerFunc
+            resultTtlInSeconds: 0
+            type: token
 
   # Defines an HTTP API endpoint that calls the main function in update.js
   # - path: url path is /settings/{id}
