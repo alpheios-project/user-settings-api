@@ -3,7 +3,7 @@ import * as jwt from "jsonwebtoken";
 // Set in `environment` of serverless.yml
 const AUTH0_CLIENT_PUBLIC_KEY = process.env.AUTH0_CLIENT_PUBLIC_KEY;
 const AUTH0_AUDIENCE = process.env.AUTH0_AUDIENCE
-const AUTH0_TEST_ID = process.env.AUTH0_TEST_ID
+const AUTH0_TEST_ID = process.env.AUTH0_TEST_ID.trim()
 
 
 export function main(event, context, callback) {
